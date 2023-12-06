@@ -14,7 +14,7 @@
 [ $POI_CREATION ] || POI_CREATION="false"
 [ $GRAPH_CREATION ] || GRAPH_CREATION="false"
 
-[ $OSMOSIS_HOME ] || OSMOSIS_HOME="/usr/bin"
+[ $OSMOSIS_HOME ] || OSMOSIS_HOME="/osmosis/bin"
 [ $DATA_PATH ] || DATA_PATH="/mapsforge/data"
 [ $MAPS_PATH ] || MAPS_PATH="/data/maps"
 [ $POIS_PATH ] || POIS_PATH="/mapsforge/pois"

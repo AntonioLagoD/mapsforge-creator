@@ -11,17 +11,17 @@
 # Configuration
 
 [ $MAP_CREATION ] || MAP_CREATION="true"
-[ $POI_CREATION ] || POI_CREATION="true"
+[ $POI_CREATION ] || POI_CREATION="false"
 [ $GRAPH_CREATION ] || GRAPH_CREATION="false"
 
 [ $OSMOSIS_HOME ] || OSMOSIS_HOME="/usr/bin"
-[ $DATA_PATH ] || DATA_PATH="$HOME/mapsforge/data"
-[ $MAPS_PATH ] || MAPS_PATH="$HOME/mapsforge/maps"
-[ $POIS_PATH ] || POIS_PATH="$HOME/mapsforge/pois"
+[ $DATA_PATH ] || DATA_PATH="/mapsforge/data"
+[ $MAPS_PATH ] || MAPS_PATH="/data/maps"
+[ $POIS_PATH ] || POIS_PATH="/mapsforge/pois"
 
 [ $GRAPHHOPPER_FILE ] || GRAPHHOPPER_FILE="graphhopper-web-1.0.jar"
 [ $GRAPHHOPPER_CONFIG ] || GRAPHHOPPER_CONFIG="config.yml"
-[ $GRAPHS_PATH ] || GRAPHS_PATH="$HOME/mapsforge/graphs"
+[ $GRAPHS_PATH ] || GRAPHS_PATH="/mapsforge/graphs"
 
 [ $DAYS ] || DAYS="1"
 

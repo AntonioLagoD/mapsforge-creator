@@ -1,9 +1,10 @@
 FROM ubuntu:latest
-RUN apt-get update \
-&& apt-get install -y wget git zip software-properties-common default-jdk awscli
-RUN add-apt-repository -y ppa:ubuntugis/ppa \
-&& apt update \
-&& apt install -y gdal-bin python-gdal
+RUN apt-get update
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y wget git zip software-properties-common default-jdk
+
+#RUN add-apt-repository -y ppa:ubuntugis/ppa
+#RUN apt-get update
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y gdal-bin python3-gdal
 
 RUN wget https://github.com/openstreetmap/osmosis/releases/download/0.49.2/osmosis-0.49.2.tar
 RUN tar xvf osmosis-0.49.2.tar 

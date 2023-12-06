@@ -1,3 +1,3 @@
 #!/bin/bash
-./map-creator.sh europe/portugal hd es,pt
+/mapsforge-creator/map-creator.sh europe/portugal hd ept
 

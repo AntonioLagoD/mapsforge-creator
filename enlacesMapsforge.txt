@@ -1,3 +1,21 @@
+Pasos para instalar la máquina:
+apt-get install -y wget git zip software-properties-common default-jdk vim mc
+apt-get install -y gdal-bin python3-gdal
+wget https://github.com/openstreetmap/osmosis/releases/download/0.48.3/osmosis-0.48.3.tgz -O osmosis.tgz
+Descomprimir en /osmosis
+chmod a+x osmosis/bin/osmosis
+https://repo1.maven.org/maven2/org/mapsforge/mapsforge-map-writer/0.20.0/mapsforge-map-writer-0.20.0-jar-with-dependencies.jar 
+Put map-writer.jar and poi-writer.jar $OSMOSIS_HOME/lib/default directory
+
+Clonar:
+https://github.com/mapsforge/mapsforge-creator.git
+o bien este adaptado:
+git clone https://github.com/AntonioLagoD/mapsforge-creator.git
+
+
+
+
+
 Descarga de datos OSM por zonas
 http://download.geofabrik.de/
 
@@ -13,23 +31,23 @@ https://osmscout.karry.cz/countours/phyghtmap-osm-contours/
 Mapas precompilados sin curvas de nivel
 https://download.mapsforge.org/
 
-Instrucciones en un foro
+************
 
-#test of merging osm + srtm and render in mapsforge using a small aera in LowerAustria along the river Danube
-#Merging Srtm + osm: Thanks to user Fireball2 at http://forum.openstreetmap.org/viewtopic.php?id=5359
+Uso :
+#!/bin/bash
+export JAVACMD_OPTIONS=-Xmx3G
+/mapsforge-creator/map-creator.sh europe/spain hd es,gl
 
-#Contours with PHYGHTMAP (output is in version 0.6)
-C:\Python27\Scripts\phyghtmap -a 15.0:48.0:16.5:48.5 -o D:\maps\Mapsforge\at_test\srtm6 --source=view1,view3,srtm3 -s 10 -c 100,50 --start-node-id=2000000000 --start-way-id=1000000000 --write-timestamp --max-nodes-per-tile=0
-
-#cut out osm-data from austria.osm
-osmosis --rx D:\maps\OSM_Data\austria.osm --tee 1 --bounding-box top="48.50" bottom="48.00" left="15.00" right="16.50" --wx D:\maps\Mapsforge\at_test\at_test.osm
-
-#merge srtm + osm
-osmosis --rx D:\maps\Mapsforge\at_test\at_test.osm --sort-0.6 --rx D:\maps\Mapsforge\at_test\srtm6.osm --sort-0.6 --merge --wx D:\maps\Mapsforge\at_test\at_test_srtm.osm
-
-#mapsforge output (use mapwriter plugin WITH dependencies)
-osmosis --rx file=D:\maps\Mapsforge\at_test\at_test_srtm.osm --mw file=D:\maps\Mapsforge\at_test\at_test_srtm.map bbox=48.0,15.0,48.5,16.5 type=hd tag-conf-file=D:\maps\Mapsforge\at_test\tag-mapping-srtm.xml
-
+Pasos seguidos por el script map-creator.sh
+1) Descargar de geofabrik la región.
+2) Descargar de karry.cz las curvas de nivel
+3) Combinar los dos pbf anteriores
+4) Descargar polígonos 
+5) Generar coordenadas de la caja y del centro del mapa de interés para obtener land.osm.
+6) Recortar sea.osm
+7) Combinar todo.
+8) Generar mapa. Incluir tag-transform y tag-mapping para filtrar y convertir las etiquetas.
+9) Copiar mapa a carpeta maps.
 
 #Custom tag-mapping-srtm.xml:
 #added lines to tag-mapping.xml:
@@ -159,34 +177,7 @@ osmosis --rx file=D:\maps\Mapsforge\at_test\at_test_srtm.osm --mw file=D:\maps\M
                   </rule>
                </rule>
             </rule>   
-            
-            
-            
-            
-            
-            
-Más instrucciones
-
-#test of merging osm + srtm and render in mapsforge using a small aera in LowerAustria along the river Danube
-#Merging Srtm + osm: Thanks to user Fireball2 at http://forum.openstreetmap.org/viewtopic.php?id=5359
-
-#get srtm (output in 0.5 format)
-Srtm2Osm.exe -step 25 -cat 500 100 -large -bounds1 48.0 14.0 48.5 16.5 -o D:\maps\Mapsforge\at_test\srtm.osm
-
-#convert srtm to 0.6 (use osmosis 0.35!!! and deactivate the mapwriterplugin = remove it from homefolder)
-osmosis --read-xml-0.5 enableDateParsing=no D:\maps\Mapsforge\at_test\srtm.osm --migrate --wx D:\maps\Mapsforge\at_test\srtm6.osm
-
-#cut out osm-data from austria.osm
-osmosis --rx D:\maps\OSM_Data\austria.osm.bz2 --tee 1 --bounding-box top="48.50" bottom="48.00" left="14.00" right="16.50" --wx D:\maps\Mapsforge\at_test\at_test.osm.bz2
-
-#merge srtm + osm
-osmosis --rx D:\maps\Mapsforge\at_test\at_test.osm.bz2 --sort-0.6 --rx D:\maps\srtm6.osm --sort-0.6 --merge --wx D:\maps\Mapsforge\at_test\at_test_srtm.osm.bz2
-
-#mapsforge output (use mapwriter plugin WITH dependencies)
-osmosis --rx file=D:\maps\Mapsforge\at_test\at_test_srtm.osm.bz2 --mw file=D:\maps\Mapsforge\at_test\at_test_srtm.map bbox=48.0,14.0,48.5,16.5 type=hd tag-conf-file=D:\maps\Mapsforge\at_test\tag-mapping-srtm.xml
-
-
-#Custom tag-mapping-srtm.xml:
+Custom tag-mapping-srtm.xml:
 #added lines to tag-mapping.xml:
 
    <!-- Elevation TAGS -->

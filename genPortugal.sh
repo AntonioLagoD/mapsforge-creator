@@ -1,3 +1,4 @@
 #!/bin/bash
-/mapsforge-creator/map-creator.sh europe/portugal hd ept
+export JAVACMD_OPTIONS=-Xmx3G
+/mapsforge-creator/map-creator.sh europe/portugal hd es,pt
 

@@ -9,7 +9,7 @@
 # written by devemux86
 
 # Configuration
-
+[ $CONTOUR ] || CONTOUR="true"
 [ $MAP_CREATION ] || MAP_CREATION="true"
 [ $POI_CREATION ] || POI_CREATION="false"
 [ $GRAPH_CREATION ] || GRAPH_CREATION="false"
@@ -41,9 +41,6 @@ if [ $# -lt 1 ]; then
   echo "Example: $0 europe/germany/berlin ram en,de,fr,es 1"
   exit
 fi
-
-read -p "Dou you want to download and merge 1 sec or 3 sec contour lines from https://osmscout.karry.cz/countours/phyghtmap-osm-contours/  (y/n)? : " CONTOUR
-CONTOUR=${CONTOUR,,}    # tolower
 
 cd "$(dirname "$0")"
 
@@ -112,11 +109,11 @@ wget -v -N -P "$WORK_PATH" https://download.geofabrik.de/$1-latest.osm.pbf || ex
 wget -v -N -P "$WORK_PATH" https://download.geofabrik.de/$1-latest.osm.pbf.md5 || exit 1
 #(cd "$WORK_PATH" && exec md5sum -c "$NAME-latest.osm.pbf.md5") || exit 1
 wget -v -N -P "$WORK_PATH" https://download.geofabrik.de/$1.poly || exit 1
-if [[ "$CONTOUR" =~ ^(yes|y)$ ]]; then
+if [ "$CONTOUR" = "true" ]; then
   if [ $(awk -F"/" '{print NF-1}' <<< $1) = 1 ]; then
 	CONTOURFILE="https://osmscout.karry.cz/countours/phyghtmap-osm-contours/$1-contours-1sec.osm.pbf"
    else
-        CONTOURFILE="https://osmscout.karry.cz/countours/phyghtmap-osm-contours/$(dirname $1)-contours-1sec.osm.pbf" 
+    CONTOURFILE="https://osmscout.karry.cz/countours/phyghtmap-osm-contours/$(dirname $1)-contours-1sec.osm.pbf" 
   fi
   
   echo $CONTOURFILE

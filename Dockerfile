@@ -21,6 +21,9 @@ RUN chmod a+x mapsforge-creator/map-creator.sh
 
 COPY map-writer.jar /osmosis/lib/default/
 COPY poi-writer.jar /osmosis/lib/default/  
+RUN mkdir /etc/osmosis
+COPY .osmosis /etc/osmosis/osmosis
+COPY .osmosis /root/.osmosis
 
 #ENV OSMOSIS_HOME="/osmosis"
 #ENV THREADS=8

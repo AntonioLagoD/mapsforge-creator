@@ -1,0 +1,2 @@
+export JAVACMD_OPTIONS="-server -Xmx8g -Djava.io.tmpdir=/tmp/"
+

@@ -1,32 +1,20 @@
 FROM ubuntu:latest
-RUN apt-get update
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y wget git zip software-properties-common default-jdk vim mc
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y –no-install-recommends wget git zip software-properties-common default-jdk gdal-bin python3-gdal && \
+	wget https://github.com/openstreetmap/osmosis/releases/download/0.48.3/osmosis-0.48.3.tgz -O osmosis.tgz && \
+	mkdir osmosis && \
+	tar zxvf osmosis.tgz -C /osmosis && \
+	rm osmosis.tgz && \
+	chmod a+x osmosis/bin/osmosis && \
+	git clone https://github.com/AntonioLagoD/mapsforge-creator.git && chmod a+x mapsforge-creator/*.sh && \
+	mkdir /etc/osmosis && \
+	rm -rf /var/lib/apt/lists/* && \
+	rm -rf /var/cache/apt/archives/*.* && \
+	apt-get remove wget git
 
-#RUN add-apt-repository -y ppa:ubuntugis/ppa
-#RUN apt-get update
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y gdal-bin python3-gdal
-
-RUN wget https://github.com/openstreetmap/osmosis/releases/download/0.48.3/osmosis-0.48.3.tgz -O osmosis.tgz
-RUN mkdir osmosis
-RUN tar zxvf osmosis.tgz -C /osmosis 
-RUN rm osmosis.tgz
-RUN chmod a+x osmosis/bin/osmosis 
-
-RUN wget https://repo1.maven.org/maven2/org/mapsforge/mapsforge-map-writer/0.20.0/mapsforge-map-writer-0.20.0-jar-with-dependencies.jar 
-RUN git clone https://github.com/AntonioLagoD/mapsforge-creator.git
-RUN chmod a+x mapsforge-creator/genEspanha.sh
-RUN chmod a+x mapsforge-creator/genGalicia.sh
-RUN chmod a+x mapsforge-creator/genPortugal.sh
-RUN chmod a+x mapsforge-creator/map-creator.sh
-
-COPY map-writer.jar /osmosis/lib/default/
-COPY poi-writer.jar /osmosis/lib/default/  
-
-#ENV OSMOSIS_HOME="/osmosis"
-#ENV THREADS=8
-#ENV SKIP_POI_CREATION="true"
-#ENV SKIP_MAP_CREATION="false"
+COPY *.jar /osmosis/lib/default/
+COPY .osmosis /etc/osmosis/osmosis
+COPY .osmosis /root/.osmosis
 
 ENTRYPOINT ["/bin/bash"]
-CMD ["mapsforge-creator/genEspanha.sh"]
+CMD ["mapsforge-creator/menu.sh"]
 

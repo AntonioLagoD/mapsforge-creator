@@ -1,3 +1,12 @@
+ALternativa usando Python https://github.com/marfrh/osm-map-generator
+********
+    osmfilter http://wiki.openstreetmap.org/wiki/Osmfilter
+    osmium tools http://osmcode.org/osmium-tool/
+    overpass http://wiki.openstreetmap.org/wiki/Overpass_API
+    osmosis http://wiki.openstreetmap.org/wiki/Osmosis
+
+*********
+
 Pasos para instalar la máquina:
 apt-get install -y wget git zip software-properties-common default-jdk vim mc
 apt-get install -y gdal-bin python3-gdal

@@ -1,5 +1,5 @@
 FROM ubuntu:latest
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y –no-install-recommends wget git zip software-properties-common default-jdk gdal-bin python3-gdal && \
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends --yes wget git zip default-jdk gdal-bin python3-gdal && \
 	wget https://github.com/openstreetmap/osmosis/releases/download/0.48.3/osmosis-0.48.3.tgz -O osmosis.tgz && \
 	mkdir osmosis && \
 	tar zxvf osmosis.tgz -C /osmosis && \
@@ -9,7 +9,7 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y –no-in
 	mkdir /etc/osmosis && \
 	rm -rf /var/lib/apt/lists/* && \
 	rm -rf /var/cache/apt/archives/*.* && \
-	apt-get remove wget git
+	apt-get remove -y git
 
 COPY *.jar /osmosis/lib/default/
 COPY .osmosis /etc/osmosis/osmosis
